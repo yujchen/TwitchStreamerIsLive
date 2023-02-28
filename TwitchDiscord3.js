@@ -38,35 +38,31 @@ async function TwitchStatus(streamID){
     while(true){
         let status = await UsherService.isChannelLive(streamID);
         console.log(`${getCurrentTime()} y is ${y}, Usher is ${status}`);
-        if (y !== 1 && status === 1){
-            if (status === 1){
-                const channel = dsclient.channels.cache.get(dsChannelID);
-                channel.send(`${streamID} is online.`);
-                console.log(`${getCurrentTime()} ${streamID} is online.`);
-                y = 1;
-            }else{
-                console.log(`Check failed. y is ${y} status ${status}`);
+        if (status !== 2){
+            if (y !== 1 && status === 1){
+                if (status === 1){
+                    const channel = dsclient.channels.cache.get(dsChannelID);
+                    channel.send(`${streamID} is online.`);
+                    console.log(`${getCurrentTime()} ${streamID} is online. Status is ${status}`);
+                    y = 1;
+                }else{
+                    console.log(`Check failed. y is ${y} status ${status}`);
+                }
+            }
+            else if (y !== 0 && (status === 0 || status === 404)){
+                if (status === 0 || status === 404){
+                    const channel = dsclient.channels.cache.get(dsChannelID);
+                    channel.send(`${streamID} is offline.`);
+                    console.log(`${getCurrentTime()} ${streamID} is offline. Status is ${status}`);
+                    y = 0;  
+                }else{
+                    console.log(`Check failed. y is ${y} status ${status}`);
+                }            
             }
         }
-        else if (y !== 0 && (status === 0 || status === 404)){
-            if (status === 0 || status === 404){
-                const channel = dsclient.channels.cache.get(dsChannelID);
-                channel.send(`${streamID} is offline.`);
-                console.log(`${getCurrentTime()} ${streamID} is offline.`);
-                y = 0;  
-            }else{
-                console.log(`Check failed. y is ${y} status ${status}`);
-            }            
-        }
-        else if (y !== 2 && status === 2){
-            if (status === 2){
-                const channel = dsclient.channels.cache.get(dsChannelID);
-                channel.send(`${streamID} does not exist.`);
-                console.log(`${getCurrentTime()} ${streamID} does not exist.`);
-                y = 2;
-            }else{
-                console.log(`Check failed. y is ${y} status ${status}`);
-            }
+        else{
+            console.log("Error 2 received");
+            console.log(`${getCurrentTime()}, Usher is ${status}`);
         }
         await new Promise(resolve => setTimeout(resolve, 3000));
     }

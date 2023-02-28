@@ -20,6 +20,8 @@ async function isChannelLive(channelName) {
     //console.log(tokenResponse);
     tokenResponse = JSON.parse(tokenResponse);
     if (!tokenResponse.data || !tokenResponse.data.streamPlaybackAccessToken) {
+        console.log("ERROR");
+        console.log(tokenResponse);
         return 2; //Error getting response
     }
     const { value: token, signature } = tokenResponse.data.streamPlaybackAccessToken;
@@ -32,14 +34,14 @@ async function isChannelLive(channelName) {
     );
     //console.log(streamResponse);
     if (streamResponse === 404){
-        console.log(channelName +" offline");
+        //console.log(channelName +" offline");
         return 404;
     }
     //console.log(streamResponse);
     if (streamResponse.includes('transcode_does_not_exist')) {
         return 0;
     } else if (streamResponse.includes('#EXTM3U')) {
-        console.log(channelName+ " online!");
+        //console.log(channelName+ " online!");
         return 1;
     } else {
         return 0;
