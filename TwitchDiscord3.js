@@ -16,12 +16,6 @@ const dsclient = new Client({
 dsclient.on('ready',()=>{
     console.log("DSBot is ready");
     const channel = dsclient.channels.cache.get(dsChannelID);
-    // channel.send(`${streamID}+bark1`);
-    // channel.send(`${streamID}+bark2`);
-    // channel.send(`${streamID}+bark3`);
-    // channel.send(`${streamID}+bark4`);
-    // channel.send(`${streamID}+bark5`);
-    // channel.send(`${streamID}+bark6`);
     TwitchStatus(streamID);
 });
 
@@ -52,7 +46,7 @@ async function TwitchStatus(streamID){
                         console.log(`Onside. defCounter check failed.`);
                         break;
                     }
-                    //await new Promise(resolve => setTimeout(resolve, 1000));
+                    await new Promise(resolve => setTimeout(resolve, 1000));
                 }
                 if (defCounter === RETRY_CHECKS){
                     const channel = dsclient.channels.cache.get(dsChannelID);
@@ -75,7 +69,7 @@ async function TwitchStatus(streamID){
                         console.log(`Offside. defCounter check failed.`);
                         break;
                     }
-                    //await new Promise(resolve => setTimeout(resolve, 1000));
+                    await new Promise(resolve => setTimeout(resolve, 1000));
                 }
                 if (defCounter === RETRY_CHECKS){
                     const channel = dsclient.channels.cache.get(dsChannelID);
@@ -91,7 +85,7 @@ async function TwitchStatus(streamID){
             console.log("Error 2 received");
             console.log(`${getCurrentTime()}, Usher is ${status}`);
         }
-//        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
 }
 
