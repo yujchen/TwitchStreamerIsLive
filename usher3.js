@@ -39,11 +39,13 @@ async function isChannelLive(channelName) {
     }
     //console.log(streamResponse);
     if (streamResponse.includes('transcode_does_not_exist')) {
+        console.log(streamResponse)
         return 0;
     } else if (streamResponse.includes('#EXTM3U')) {
         //console.log(channelName+ " online!");
         return 1;
     } else {
+        console.log(streamResponse)
         return 0;
     }
   } catch (error) {
